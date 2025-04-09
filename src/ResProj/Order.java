@@ -1,5 +1,4 @@
 package ResProj;
-import java.util.*;
 
 public class Order {
 	Menu m;

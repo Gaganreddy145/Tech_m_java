@@ -29,7 +29,39 @@ public class Restaurant {
 		this.name = name;
 	}
 
+	public void createOrder(Menu requestedItem, Customer c) {
+		Order exist = null;
+		for (Order ord : lo) {
+			if (ord.getM().getId() == requestedItem.getId() && ord.getC().getId() == c.getId()) {
+				exist = ord;
+			}
+		}
+		if (exist != null) {
+			exist.setQuantity(exist.getQuantity() + 1);
+			return;
+		}
+		Order o = new Order(requestedItem, c);
+		lo.add(o);
+	}
+
+	public double calculateBill(Customer c) {
+		double total = 0;
+		for (Order ord : lo) {
+			if (ord.getC().getId() == c.getId()) {
+				total += ord.getM().getPrice() * ord.getQuantity();
+			}
+		}
+		return total;
+	}
+
+	public void displayMenu() {
+		for (Menu m : lm) {
+			System.out.println(m);
+		}
+	}
+
 	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
 		Restaurant r = new Restaurant("Satyam");
 		r.lm.add(new Menu(1, "Dosa", 80));
 		r.lm.add(new Menu(2, "Idli", 50));
@@ -38,18 +70,23 @@ public class Restaurant {
 		Customer c2 = new Customer(102, "Beggar");
 		r.lc.add(c1);
 		r.lc.add(c2);
-		Order o = c1.addOrder(r.lm,r.lo);
-		if (o != null) {
-			r.lo.add(o);
-		}
-		Order o1 = c1.addOrder(r.lm,r.lo);
-		if (o1 != null) {
-			r.lo.add(o1);
-		}
-		Order o2 = c2.addOrder(r.lm,r.lo);
-		if (o2 != null) {
-			r.lo.add(o2);
-		}
+		char ch = 'n';
+		do {
+			r.displayMenu();
+			System.out.print("Enter the id of the item: ");
+			int id = sc.nextInt();
+			Menu requestedItem = c1.addOrder(r.lm, id);
+			if (requestedItem != null) {
+				r.createOrder(requestedItem, c1);
+			} else {
+				System.out.println("No such item!!!");
+			}
+			System.out.print("Do u want to add more items? ");
+			sc.nextLine();
+			ch = sc.nextLine().charAt(0);
+		} while (ch == 'y' || ch == 'Y');
+		sc.close();
+		System.out.println("Total Bill: " + r.calculateBill(c1));
 		System.out.println(r.lo);
 	}
 
