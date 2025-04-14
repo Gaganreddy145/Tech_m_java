@@ -1,5 +1,6 @@
 package ResProj;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class Restaurant {
@@ -60,6 +61,34 @@ public class Restaurant {
 		}
 	}
 
+	public HashMap<String,Integer> generateTotalCountByItemsForToday() {
+		HashMap<String, Integer> todayItems = new HashMap<>();
+		LocalDate today = LocalDate.now();
+		for (Order o : lo) {
+			if (o.currentDate.compareTo(today) == 0) {
+				if (todayItems.containsKey(o.getM().getName())) {
+					todayItems.put(o.getM().getName(), todayItems.get(o.getM().getName()) + o.getQuantity());
+				} else {
+					todayItems.put(o.getM().getName(), o.getQuantity());
+				}
+			}
+		}
+		return todayItems;
+	}
+	
+	public String todayHighestOrderItem() {
+		HashMap<String,Integer> todayItems = generateTotalCountByItemsForToday();
+		int max = Integer.MIN_VALUE;
+		String item = null;
+		for(String key:todayItems.keySet()) {
+			if(max < todayItems.get(key)) {
+				max = todayItems.get(key);
+				item = key;
+			}
+		}
+		return item;
+	}
+
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		Restaurant r = new Restaurant("Satyam");
@@ -88,6 +117,17 @@ public class Restaurant {
 		sc.close();
 		System.out.println("Total Bill: " + r.calculateBill(c1));
 		System.out.println(r.lo);
+		HashMap<String,Integer> todayItems = r.generateTotalCountByItemsForToday();
+		for (String food : todayItems.keySet()) {
+			System.out.println(food + " : " + todayItems.get(food));
+		}
+		String highestOrderedItemToday = r.todayHighestOrderItem();
+		if(highestOrderedItemToday == null) {
+			System.out.println("No item available");
+		}else {
+			System.out.println(highestOrderedItemToday);
+		}
+		
 	}
 
 }
