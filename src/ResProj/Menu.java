@@ -42,7 +42,5 @@ public class Menu {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-
-	
-
+		
 }
