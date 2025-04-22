@@ -15,3 +15,7 @@ build/
 
 # Ignore logs
 *.log
+
+# Ignore Referenced Libraries (external JARs)
+lib/
+*.jar
