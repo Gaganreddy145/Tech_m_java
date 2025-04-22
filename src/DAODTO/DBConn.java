@@ -9,10 +9,10 @@ public class DBConn {
 	static String DB_URL = "jdbc:mysql://localhost:3306/testdb";
 	static String DB_USER = "root";
 	static String DB_PASSWORD = "gaganeswar145";
-	
+
 	public static Connection createConnection() throws SQLException, ClassNotFoundException {
 		Class.forName(DriverURL);
-		Connection conn = DriverManager.getConnection(DB_URL,DB_USER,DB_PASSWORD);
+		Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 		return conn;
 	}
 }

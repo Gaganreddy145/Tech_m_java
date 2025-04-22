@@ -2,7 +2,9 @@ package DAODTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeFeatures implements EmployeeTransfer {
@@ -49,13 +51,41 @@ public class EmployeeFeatures implements EmployeeTransfer {
 		return i;
 	}
 
-//	@Override
-//	public List<Employee> getAll() {
-//		
-//		// TODO Auto-generated method stub
-//		String 
-//		return null;
-//	}
-	
+	@Override
+	public List<Employee> getAll() {
+		// TODO Auto-generated method stub
+		List<Employee> le = new ArrayList<>();
+		String s = "select * from employee";
+		try {
+			PreparedStatement ps = conn.prepareStatement(s);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				le.add(new Employee(rs.getInt(1), rs.getString(2), rs.getString(3)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return le;
+	}
+
+	@Override
+	public int updateEmployee(int id) {
+		// TODO Auto-generated method stub
+		int temp = 0;
+		String s = "update employee set designation = ? where id = ?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(s);
+			ps.setString(1, "Manager");
+			ps.setInt(2, id);
+			temp = ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return temp;
+	}
 
 }
