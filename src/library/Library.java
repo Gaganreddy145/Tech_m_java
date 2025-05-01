@@ -16,6 +16,16 @@ public class Library {
 		la = new ArrayList<>();
 	}
 
+	public List<Assigned> searchByStudentNameInIssuedBooks(String name) {
+		List<Assigned> searchFilterList = new ArrayList<>();
+		for (Assigned a : la) {
+			if (a.getS().getSname().equalsIgnoreCase(name)) {
+				searchFilterList.add(a);
+			}
+		}
+		return searchFilterList;
+	}
+
 	public void displayAllAssignedBooks() {
 		for (Assigned a : la) {
 			System.out.println(a);
@@ -90,7 +100,7 @@ public class Library {
 			}
 		}
 		if (book != null) {
-			b.setIssuedQuantity(b.getIssuedQuantity() + 1);
+			b.setIssuedQuantity(b.getIssuedQuantity() - 1);
 			la.remove(book);
 			System.out.println("Book returned successfully");
 		}
