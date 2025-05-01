@@ -21,6 +21,13 @@ public class Book {
 		this.author = author;
 		this.quantity = quantity;
 	}
+	
+	
+
+	public Book(int bid, String bname, String author, int quantity, int issuedQuantity) {
+		this(bid,bname,author,quantity);
+		this.issuedQuantity = issuedQuantity;
+	}
 
 	public int getBid() {
 		return bid;

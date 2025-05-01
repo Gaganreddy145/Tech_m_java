@@ -16,6 +16,22 @@ public class Library {
 		la = new ArrayList<>();
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setLb(List<Book> lb) {
+		this.lb = lb;
+	}
+
+	public void setLs(List<Student> ls) {
+		this.ls = ls;
+	}
+
+	public void setLa(List<Assigned> la) {
+		this.la = la;
+	}
+
 	public List<Assigned> searchByStudentNameInIssuedBooks(String name) {
 		List<Assigned> searchFilterList = new ArrayList<>();
 		for (Assigned a : la) {
